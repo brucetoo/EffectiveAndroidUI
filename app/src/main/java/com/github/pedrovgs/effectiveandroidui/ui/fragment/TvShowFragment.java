@@ -23,8 +23,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import butterknife.InjectView;
-import butterknife.OnClick;
+
 import com.github.pedrovgs.effectiveandroidui.R;
 import com.github.pedrovgs.effectiveandroidui.ui.renderer.chapterviewmodel.ChapterViewModelCollection;
 import com.github.pedrovgs.effectiveandroidui.ui.renderer.chapterviewmodel.ChapterViewModelRendererAdapter;
@@ -34,8 +33,13 @@ import com.github.pedrovgs.effectiveandroidui.ui.viewmodel.TvShowViewModel;
 import com.github.pedrovgs.effectiveandroidui.ui.viewmodel.action.ActionCommand;
 import com.github.pedrovgs.effectiveandroidui.util.ToastUtils;
 import com.squareup.picasso.Picasso;
+
 import java.util.List;
+
 import javax.inject.Inject;
+
+import butterknife.InjectView;
+import butterknife.OnClick;
 
 /**
  * Fragment created to show a TvShows. This fragment is going to be used in the tablet version.
@@ -74,6 +78,7 @@ import javax.inject.Inject;
 
   @Override public void onAttach(Activity activity) {
     super.onAttach(activity);
+      //setReady是为了保证所有的ViewModel层的回调后UI操作时Fragment没有被销毁或隐藏
     tvShowViewModel.setReady(true);
   }
 
@@ -144,6 +149,11 @@ import javax.inject.Inject;
     lv_chapters.setAdapter(adapter);
   }
 
+    /**
+     * 将改Fragment与 Presenter层或者 ViewModel绑定起来
+     * 1.设置Presenter中的监听,便于在改Fragment回调时执行对应的UI操作
+     * 2.初始化 Presenter层 主要是会涉及到该Fragment中UI的变化,如 Loading 转 content
+     */
   private void bindViewModel() {
     tvShowViewModel.setListener(this);
     tvShowViewModel.initialize();

@@ -49,6 +49,10 @@ public class TvShowViewModel {
     this.showTvShowOnBrowserActionCommand = showTvShowOnBrowserActionCommand;
   }
 
+    /**
+     * 调用初始化成功后
+     * 回调通知Fragment执行空视图显示的逻辑 (UI变化)
+     */
   public void initialize() {
     listener.onEmptyCaseVisibilityChanged(true);
   }
@@ -129,6 +133,7 @@ public class TvShowViewModel {
    * Interface created to work as ViewModel listener.
    * Every change in the view model will be
    * notified to Listener implementation.
+   * 整个TvShowFragment 界面中需要改变UI状态的回调
    */
   public interface Listener {
 
